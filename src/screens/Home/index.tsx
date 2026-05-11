@@ -1,11 +1,14 @@
-import { View, Text, Image, FlatList, ScrollView } from "react-native";
+import { View, Text, Image, FlatList, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { destaques, comercios } from "../../db/data";
+import { produtos, comercios } from "../../db/data";
+import { useNavigation } from "@react-navigation/native";
+import { DetalheComercioNavigationProp } from "../../routes/types/NavigatorType";
 
 export default function Home() {
   const edges = useSafeAreaInsets();
+  const navigation = useNavigation<DetalheComercioNavigationProp>();
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "white" }}>
       <View
@@ -52,17 +55,19 @@ export default function Home() {
             horizontal
             contentContainerStyle={{ gap: 10 }}
             renderItem={({ item }) => (
-              <Image
-                source={item.image}
-                style={{ width: 100, height: 100, borderRadius: 20 }}
-              />
+              <TouchableOpacity onPress={() => navigation.navigate("DetalheComercio", { id: item.id })}>
+                <Image
+                  source={item.image}
+                  style={{ width: 100, height: 100, borderRadius: 20 }}
+                />
+              </TouchableOpacity>
             )}
           />
           <Text style={{ marginBottom: 5, fontSize: 14, color: "#026534" }}>
             Destaques
           </Text>
           <FlatList
-            data={destaques}
+            data={produtos.filter((produto) => produto.destaque)}
             showsHorizontalScrollIndicator={false}
             keyExtractor={(item) => item.id.toString()}
             horizontal
