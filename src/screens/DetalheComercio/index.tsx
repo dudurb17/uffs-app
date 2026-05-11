@@ -6,6 +6,7 @@ import { DetalheComercioNavigationProp, RootStackParamList } from "../../routes/
 import { Comercio, comercios, produtos, Produto } from "../../db/data";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { styles } from "./styles";
 
 export default function DetalheComercio() {
   const route = useRoute<RouteProp<RootStackParamList, "DetalheComercio">>();
@@ -25,63 +26,49 @@ export default function DetalheComercio() {
   }, []);
 
   return (
-    <View style={{ paddingTop: edges.top, flex: 1, marginHorizontal: 20 }}>
-      <View style={{ alignItems: "center", marginTop: 20, gap: 10 }}>
+    <View style={[styles.container, { paddingTop: edges.top }]}>
+      <View style={styles.header}>
         <Image
           source={comercioCurrent?.image}
-          style={{ width: 81, height: 81, borderRadius: 100 }}
+          style={styles.comercioImage}
         />
-        <Text style={{ fontSize: 20, fontWeight: "bold", color: "#026534" }}>
+        <Text style={styles.comercioNome}>
           {comercioCurrent?.nome}
         </Text>
-        <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
-          <Text style={{ fontSize: 16 }}>5,5 km - Entrega Padrão</Text>
-          <Text style={{ fontSize: 16 }}>{comercioCurrent?.nota}</Text>
+        <View style={styles.infoRow}>
+          <Text style={styles.infoText}>5,5 km - Entrega Padrão</Text>
+          <Text style={styles.infoText}>{comercioCurrent?.nota}</Text>
           <FontAwesome name="star" size={20} color="orange" />
         </View>
-        <View
-          style={{
-            backgroundColor: "#026534",
-            flexDirection: "row",
-            padding: 10,
-            borderRadius: 10,
-            gap: 10,
-          }}
-        >
+        <View style={styles.whatsappButton}>
           <FontAwesome name="whatsapp" size={20} color="white" />
-          <Text style={{ fontSize: 16, color: "white" }}>
+          <Text style={styles.whatsappText}>
             Chamar no Whatsapp
           </Text>
         </View>
         <TouchableOpacity onPress={() => navigation.navigate("InfoComercio", { id: comercioCurrent?.id ?? 0})}>
-          <Text
-            style={{
-              fontSize: 16,
-              textDecorationLine: "underline",
-              color: "#026534",
-            }}
-          >
+          <Text style={styles.verMaisText}>
             Ver mais
           </Text>
         </TouchableOpacity>
       </View>
       <View>
-        <Text style={{ fontSize: 16, fontWeight: "bold", color: "#026534", marginBottom: 10 }}>
+        <Text style={styles.produtosTitle}>
           Produtos
         </Text>
         <FlatList
           data={produtosCurrent}
           keyExtractor={(item) => item.id.toString()}
           numColumns={3}
-          contentContainerStyle={{ gap: 10 }}
+          contentContainerStyle={styles.produtosList}
           renderItem={({ item }) => (
-            <View style={{width:100, marginRight: 10}}>
+            <View style={styles.produtoItem}>
               <Image
                 source={item.image}
-                style={{ width: 100, height: 100, borderRadius: 10 }}
+                style={styles.produtoImage}
               />
               <Text numberOfLines={1}>{item?.descricao}</Text>
-              <Text numberOfLines={1} style={{color: "#026534", fontWeight: "bold"}}>R$: {item?.preco}</Text>
+              <Text numberOfLines={1} style={styles.produtoPreco}>R$: {item?.preco}</Text>
             </View>
           )}
         />

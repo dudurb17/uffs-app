@@ -1,9 +1,10 @@
 import { View, Text } from "react-native";
 import React from "react";
+import { styles } from "./styles";
 
 export default function User() {
   return (
-    <View style={{ flex: 1, backgroundColor: 'white'}}>
+    <View style={styles.container}>
       <Text> Bem vido a tela user</Text>
     </View>
   );
