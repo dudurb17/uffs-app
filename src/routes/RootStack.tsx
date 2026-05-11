@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import DetalheComercio from "../screens/DetalheComercio";
 import { RootStackParamList } from "./types/NavigatorType";
 import RootTab from "./RootTab";
+import InfoComercio from "../screens/InfoComercio";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -13,6 +14,11 @@ const RootStack = () => {
         name="DetalheComercio"
         options={{ headerShown: false }}
         component={DetalheComercio}
+      />
+       <Stack.Screen
+        name="InfoComercio"
+        options={{ headerShown: false }}
+        component={InfoComercio}
       />
     </Stack.Navigator>
   );

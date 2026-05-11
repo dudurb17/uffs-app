@@ -1,8 +1,8 @@
 import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { RouteProp } from "@react-navigation/native";
-import { RootStackParamList } from "../../routes/types/NavigatorType";
+import { DetalheComercioNavigationProp, RootStackParamList } from "../../routes/types/NavigatorType";
 import { Comercio, comercios, produtos, Produto } from "../../db/data";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -13,6 +13,7 @@ export default function DetalheComercio() {
   const [comercioCurrent, setComercioCurrent] = useState<Comercio>();
   const [produtosCurrent, setProdutosCurrent] = useState<Produto[]>([]);
   const edges = useSafeAreaInsets();
+  const navigation = useNavigation<DetalheComercioNavigationProp>();
 
   useEffect(() => {
     const comercioCurrent = comercios.find((comercio) => comercio.id === id);
@@ -52,7 +53,7 @@ export default function DetalheComercio() {
             Chamar no Whatsapp
           </Text>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("InfoComercio", { id: comercioCurrent?.id ?? 0})}>
           <Text
             style={{
               fontSize: 16,
